@@ -8,10 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 export default function AlertDialog({ open, setOpen, dataDetail }) {
   const { hair } = dataDetail;
   const { address } = dataDetail;
-  const { coordinates } = address;
   const { bank } = dataDetail;
-  console.log('bank',bank);
-
 
   const handleClose = () => {
     setOpen(false);
@@ -55,11 +52,11 @@ export default function AlertDialog({ open, setOpen, dataDetail }) {
           <div className="font-semibold text-lg mt-2 text-blue-800">hair</div>
           <div className="grid grid-cols-4 ">
             <div className="font-medium">Color :</div>
-            <div>{hair.color}</div>
+            <div>{hair ? hair.color : '-'}</div>
           </div>
           <div className="grid grid-cols-4 mb-2">
             <div className="font-medium">Type :</div>
-            <div>{hair.type}</div>
+            <div>{hair ? hair.type : '-'}</div>
           </div>
 
           <div className="grid grid-cols-4">
@@ -83,36 +80,30 @@ export default function AlertDialog({ open, setOpen, dataDetail }) {
           </div>
           <div className="flex ">
             <div className="font-medium">Address :</div>
-            <div className="ml-16">{address.address}</div>
+            <div className="ml-16">{address ? address.address : '-'}</div>
           </div>
           <div className="grid grid-cols-4 mb-2">
             <div className="font-medium">City :</div>
-            <div>{address.city}</div>
+            <div>{address ? address.city : '-'}</div>
           </div>
-          <div className="grid grid-cols-4 mb-2">
-            <div className="font-medium">coordinates :</div>
-            <div>
-              <div>lat: {coordinates.lat}</div>
-              <div>lng: {coordinates.lng}</div>
-            </div>
-          </div>
+
           <div className="grid grid-cols-4 mb-2">
             <div className="font-medium">PostalCode :</div>
-            <div>{address.postalCode}</div>
+            <div>{address ? address.postalCode : '-'}</div>
           </div>
           <div className="grid grid-cols-4 mb-2">
             <div className="font-medium">State :</div>
-            <div>{address.state}</div>
+            <div>{address ? address.state : '-'}</div>
           </div>
 
           <div className="font-semibold text-lg mt-2 text-blue-800">Bank</div>
           <div className="grid grid-cols-4 ">
             <div className="font-medium">CardExpire :</div>
-            <div>{bank.cardExpire}</div>
+            <div>{bank ? bank.cardExpire : '-'}</div>
           </div>
           <div className="grid grid-cols-4 mb-2">
             <div className="font-medium">CardNumber :</div>
-            <div>{bank.cardNumber}</div>
+            <div>{bank ? bank.cardNumber : '-'}</div>
           </div>
         </DialogContent>
         <DialogActions>

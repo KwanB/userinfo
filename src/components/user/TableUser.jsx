@@ -109,10 +109,6 @@ export default function TableUser() {
     }
   };
 
-  useEffect(() => {
-    userData();
-  }, []);
-
   const filteredData = getData.filter((row) => {
     const name =
       `${row.firstName} ${row.lastName} ${row.gender} ${row.email} ${row.phone} ${row.age} ${row.maidenName}`.toLowerCase();
@@ -123,9 +119,14 @@ export default function TableUser() {
   const [dataDetail, setDataDetail] = useState([]);
 
   const handleClickOpen = (data) => {
-    setOpen(true);
-    setDataDetail(data);
+    if (data) {
+      setOpen(true);
+      setDataDetail(data);
+    }
   };
+  useEffect(() => {
+    userData();
+  }, []);
 
   return (
     <div className="mt-8">
@@ -147,7 +148,7 @@ export default function TableUser() {
               placeholder="ค้นหา"
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton sx={{ p: '10px' }} onClick={() => {}}>
+            <IconButton sx={{ p: "10px" }} onClick={() => {}}>
               <SearchIcon />
             </IconButton>
           </Paper>
@@ -187,13 +188,15 @@ export default function TableUser() {
                     <TableCell align="center">{row.maidenName}</TableCell>
                     <TableCell align="center">{row.age}</TableCell>
                     <TableCell align="center">
-                      {row.age > 60
-                        ? <span style={{color: '#3ea744'}}>วัยเกษียณ</span>
-                        : row.age >= 23
-                        ? <span style={{color: '#46a9e2'}}>อายุปกติ</span>
-                        : row.age >= 1
-                        ? <span style={{color: '#ee8674'}}>วัยเรียน</span>
-                        : <span style={{color: '#ebb0e3'}}>วัยแรกเกิด</span>}
+                      {row.age > 60 ? (
+                        <span style={{ back: "#3ea744" }}>วัยเกษียณ</span>
+                      ) : row.age >= 23 ? (
+                        <span style={{ color: "#46a9e2" }}>วัยทำงาน</span>
+                      ) : row.age >= 1 ? (
+                        <span style={{ color: "#ee8674" }}>วัยเรียน</span>
+                      ) : (
+                        <span style={{ color: "#ebb0e3" }}>วัยแรกเกิด</span>
+                      )}
                     </TableCell>
                     <TableCell align="center">{row.gender}</TableCell>
                     <TableCell align="center">{row.email}</TableCell>
@@ -203,11 +206,13 @@ export default function TableUser() {
                       <img src={row.image} alt="img" width={60} height={60} />
                     </TableCell>
                     <TableCell align="center">
-                      <Button variant="outlined" size="small" 
-                      onClick={() => {
-                        handleClickOpen(row);
-                      }}
-                      // onClick={handleClickOpen}
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={() => {
+                          handleClickOpen(row);
+                        }}
+                        // onClick={handleClickOpen}
                       >
                         Detail
                       </Button>
@@ -229,7 +234,11 @@ export default function TableUser() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <DetailUser open={open} setOpen={setOpen} dataDetail={dataDetail}></DetailUser>
+      {dataDetail ? <DetailUser
+        open={open}
+        setOpen={setOpen}
+        dataDetail={dataDetail}
+      ></DetailUser> : <></>}
     </div>
   );
 }
